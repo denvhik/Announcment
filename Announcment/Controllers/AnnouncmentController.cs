@@ -17,6 +17,15 @@ namespace Announcment.Controllers
             _dbContext = dbContext;
         }
 
+        [HttpGet("id-range")]
+        public async Task<IActionResult> GetIdRange()
+        {
+            var minId = await _dbContext.AnnouncmentJob.MinAsync(a => a.Id);
+            var maxId = await _dbContext.AnnouncmentJob.MaxAsync(a => a.Id);
+
+            return Ok(new { minId, maxId });
+        }
+
         [HttpGet("announcements")]
         public async Task<IActionResult> GetAnnouncement()
         {
@@ -26,8 +35,8 @@ namespace Announcment.Controllers
 
             if (AnnouncmentJobs is null) return NotFound("Оголошення під таким номером не знайдене");
 
-            var announcementJobDTOs = AnnouncmentJobs.Select(job => new AnnouncmentJobDTO(job)).ToList();
-            return Ok(announcementJobDTOs);
+            
+            return Ok(AnnouncmentJobs);
         }
 
         [HttpGet("announcements/{id}")]
@@ -40,23 +49,28 @@ namespace Announcment.Controllers
             var AnnouncmnetJobDTO = new AnnouncmentJobDTO(AnnouncmentJob);
             return Ok(AnnouncmnetJobDTO);
         }
-        
+
         [HttpPost("announcements")]
         public async Task<IActionResult> Post([FromBody] AnnouncmentJobDTO announcmentJobDTO)
         {
-         
-            if (announcmentJobDTO is null)  return BadRequest("404 - ERROR");
-            var announcmentJob = new AnnouncmentJob
+            if (announcmentJobDTO is null)
+            {
+                return BadRequest("404 - ERROR");
+            }
+
+            var announcment = new AnnouncmentJob
             {
                 Title = announcmentJobDTO.Title,
                 Description = announcmentJobDTO.Description,
                 Date_added = DateTime.Now
             };
 
-            _dbContext.Add(announcmentJobDTO);
+            _dbContext.Add(announcment);
             await _dbContext.SaveChangesAsync();
+
             return Ok();
         }
+
 
         [HttpDelete("announcements/{id}")]
         public async Task<IActionResult> Delete(int id)

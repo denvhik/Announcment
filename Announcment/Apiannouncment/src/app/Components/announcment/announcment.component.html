@@ -1,0 +1,30 @@
+
+<div *ngIf="announcements.length > 0" class="job-announcement-container">
+    <h2 class="job-announcement-heading">Job Announcements</h2>
+    <div class="job-announcement-list">
+      <div class="add-announcement-container">
+        <h2 class="add-announcement-heading">Get Announcement</h2>
+        <div class="add-announcement-form">
+          <label for="announcmentid">ID:</label>
+          <input type="text" [(ngModel)]="id" [min]="minId" [max]="maxId">
+          <button type="button" class="add-announcement-button" (click)="getbyid()">Submit</button>  
+          <div *ngIf="minId !== 0 || maxId !== 0" class="id-range">
+            Діапазон допустимих значень ID: {{ minId }} - {{ maxId }}
+          </div>
+          
+          <div *ngIf="showWarning" class="warning">
+            Введений ID некоректний. Спробуйте ще раз.
+            <button (click)="dismissWarning()">Закрити</button>
+          </div>
+        </div>
+      </div>
+      <div *ngFor="let announcement of announcements" class="job-announcement-item">
+        <div class="job-announcement-title">{{ announcement.title }}</div>
+        <div class="job-announcement-description">{{ announcement.description }}</div>
+        <div class="job-announcement-buttons">
+          <button type ="button" class="job-announcement-button-delete"(click)="deleteAnnouncements(announcement.id)">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
