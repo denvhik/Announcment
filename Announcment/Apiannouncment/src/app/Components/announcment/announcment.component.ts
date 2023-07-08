@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
 import { ServiceAnnouncmentService } from 'src/app/Services-Announcment/service-announcment.service';
 @Component({
   selector: 'app-announcment',
@@ -13,15 +12,17 @@ export class AnnouncmentComponent  {
   showWarning: boolean = false;
   minId: number = 0;
   maxId: number = 0;
-
+  selectedAnnouncement: any = null;
+  editedAnnouncement: any = null;
   announcements: any[] = [];
+
+
 
   constructor(private http: HttpClient,private serviceAnnouncmentService:ServiceAnnouncmentService) 
   {
     
   }
-
-
+  
   ngOnInit(): void {
    this.serviceAnnouncmentService.getIDRange().subscribe(response => 
     {
@@ -66,5 +67,29 @@ export class AnnouncmentComponent  {
   dismissWarning() {
     this.showWarning = false;
   }
+
+  updateAnnouncement(announcement: any) {
+    this.selectedAnnouncement = announcement;
+    this.editedAnnouncement = { ...announcement };
+    console.log(announcement);
+  }
+
+  saveAnnouncement() {
+    this.serviceAnnouncmentService.updateAnnouncement(this.selectedAnnouncement.id, this.editedAnnouncement).subscribe(
+      () => {
+        this.selectedAnnouncement = null;
+        this.editedAnnouncement = null;
+        this.getAnnouncements();
+      },
+      (error) => {
+        console.error('Failed to update announcement', error);
+      }
+    );
+  }
+  cancelEdit() {
+    this.selectedAnnouncement = null;
+    this.editedAnnouncement = null;
+  }
+
 }
 

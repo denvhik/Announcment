@@ -6,11 +6,15 @@ import {HttpClientModule} from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AnnouncmentComponent } from './Components/announcment/announcment.component';
+import { SimilarComponent } from './Components/getSimilar/similar/similar.component';
+import { AddannouncmentComponent } from './Components/NewAnnouncment/addannouncment/addannouncment.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AnnouncmentComponent,
+    SimilarComponent,
+    AddannouncmentComponent,
 
   ],
   imports: [

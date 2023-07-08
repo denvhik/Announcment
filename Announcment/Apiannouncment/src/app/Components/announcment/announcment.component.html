@@ -23,8 +23,25 @@
         <div class="job-announcement-description">{{ announcement.description }}</div>
         <div class="job-announcement-buttons">
           <button type ="button" class="job-announcement-button-delete"(click)="deleteAnnouncements(announcement.id)">Delete</button>
+          <button type="button" class="job-announcement-button-update" (click)="updateAnnouncement(announcement)">Update</button>
         </div>
       </div>
     </div>
   </div>
-
+  <div *ngIf="selectedAnnouncement" class="edit-announcement-container">
+    <h2>Edit Announcement</h2>
+    <div class="edit-announcement-form">
+      <div class="form-group">
+        <label for="editTitle">Title:</label>
+        <input type="text" id="editTitle" [(ngModel)]="editedAnnouncement.title">
+      </div>
+      <div class="form-group">
+        <label for="editDescription">Description:</label>
+        <textarea id="editDescription" [(ngModel)]="editedAnnouncement.description"></textarea>
+      </div>
+      <div class="form-group">
+        <button type="button" class="edit-announcement-button-save" (click)="saveAnnouncement()">Save</button>
+        <button type="button" class="edit-announcement-button-cancel" (click)="cancelEdit()">Cancel</button>
+      </div>
+    </div>
+  </div>

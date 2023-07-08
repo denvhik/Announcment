@@ -1,0 +1,20 @@
+<div>
+    <h2>Get Similar Announcements</h2>
+    <div>
+      <label for="announcementId">Enter ID:</label>
+      <input type="number" id="announcementId" [(ngModel)]="id">
+     <button (click)="getAllSimilarAnnouncements(id)">Get Similar Announcements</button>
+    </div>
+  
+    <div *ngIf="isIdInputted && similarAnnouncements.length > 0">
+        <h3>Similar Announcements:</h3>
+        <div *ngFor="let announcement of similarAnnouncements" class="job-announcement-item">
+          <div class="job-announcement-title">{{ announcement.title }}</div>
+          <div class="job-announcement-description">{{ announcement.description }}</div>
+        </div>
+      </div>
+    
+      <div *ngIf="isIdInputted && similarAnnouncements.length === 0" class="no-announcements-message">
+        No similar announcements found.
+      </div>
+    </div>

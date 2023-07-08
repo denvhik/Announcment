@@ -26,4 +26,8 @@ getbyid(id: number): Observable<any> {
   const url = `https://localhost:44394/Announcment/announcements/${id}`;
   return this.http.get(url);
 }
+updateAnnouncement(id: number, announcement: any): Observable<any> {
+  const url = `${this.ApiUrl}/${id}`;
+  return this.http.put<any>(url, announcement);
+}
 }
