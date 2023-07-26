@@ -8,7 +8,7 @@ import { Observable } from 'rxjs/internal/Observable';
   providedIn: 'root'
 })
 export class NewService {
-  private apiUrl = 'https://localhost:44394/Announcment/announcements';
+  private apiUrl = 'https://localhost:7167/Announcment/announcements';
 
   constructor(private http: HttpClient) {}
 
